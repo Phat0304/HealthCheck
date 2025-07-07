@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "winter";
+  default: true;
+ 
+}
+
+.mainColor {
+   @apply bg-[#00B2CA] ;
+}
+
+.textBox {
+  @apply border-[#00B2CA] border-2 rounded text-sm text-center ;
+}
+
+
+.mainLabel {
+  @apply border-[#00B2CA] border-2 border-solid px-5 py-3 rounded text-sm;
+}
+
+.label {
+  @apply   text-sm text-center text-gray-600 ;
+
+}
+
+.labelBox {
+  @apply border-[#00B2CA] border-1 border-solid px-4 py-2 rounded text-sm flex items-center justify-center text-center ;
+
+}
+
+.buttonBar {
+   @apply border-[#00B2CA] border-2 border-solid px-4 py-2 rounded text-sm bg-[#81CDDF];
+}
+
+.errButton {
+
+}
+
+.warningButton{
+
+}
+
+.confirmButton{
+  @apply btn bg-[#2CAF65]  border-1 border-[#00A0B0] text-slate-50 hover:bg-[#039643]
+}
+
+.cancelButton{
+  @apply btn bg-gray-400  border-1  border-gray-400 text-slate-50 hover:bg-gray-500
+}
+
+.importButton {
+  @apply btn bg-blue-400  border-1 border-[#00A0B0] text-slate-50  hover:bg-blue-500
+}
+
+
+.columnTable{
+   @apply  border-t-1 border-l-1 border-gray-600 p-1 text-neutral-800
+}
