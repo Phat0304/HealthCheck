@@ -121,8 +121,6 @@ export default function ExportPage() {
           // Cleanup
           document.body.removeChild(link);
           window.URL.revokeObjectURL(url);
-
-          alert("ok");
         })
         .catch((err) => {
           alert(err);
@@ -416,7 +414,7 @@ export default function ExportPage() {
 
       <dialog id="errExport_modal" className="modal">
         <div className="modal-box bg-slate-50 text-black w-auto h-auto ">
-          <div className="flex flex-col items-center space-y-5 w-auto h-auto p-5 ">
+          <div className="flex flex-col items-center space-y-5 w-auto h-auto  ">
             <img src="/images/cancel.png" alt="bin" className="w-20 h-20 " />
             <div className="flex flex-col space-y-2 w-auto h-auto">
               <label className="text-md ">
@@ -435,7 +433,7 @@ export default function ExportPage() {
 
       <dialog id="errSearch_modal" className="modal">
         <div className="modal-box bg-slate-50 text-black w-auto h-auto ">
-          <div className="flex flex-col items-center space-y-5 w-auto h-auto p-5 ">
+          <div className="flex flex-col items-center space-y-5 w-auto h-auto  ">
             <img src="/images/cancel.png" alt="bin" className="w-20 h-20 " />
             <div className="flex flex-col space-y-2 w-auto h-auto">
               <label className="text-md ">
