@@ -7,18 +7,24 @@ import Navbar from "./components/Bar/Navbar";
 import "./App.css";
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleSidebar = () => setIsOpen((prev) => !prev);
   return (
     <>
       <div className="">
-        <div>
+        <div className="">
           <div>
-            <Navbar />
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
           </div>
-          <main className="">
-            <div className="h-16"></div>
-            <div className="flex flex-row h-auto bg-slate-50 ">
-              <Sidebar />
-              <div className="flex-1 bg-slate-800">
+          <main
+            className={` ${
+              isOpen
+                ? "pl-60 w-screen duration-500"
+                : "pl-14 w-screen duration-500"
+            }`}
+          >
+            <div className="flex flex-col ">
+              <div className="flex-1 bg-amber-100 ">
                 <Outlet />
               </div>
             </div>

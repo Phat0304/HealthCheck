@@ -55,5 +55,5 @@
 
 
 .columnTable{
-   @apply  border-t-1 border-l-1 border-gray-600 p-1 text-neutral-800
+   @apply  border-t-1 border-l-1 border-gray-600 p-1 text-neutral-600
 }

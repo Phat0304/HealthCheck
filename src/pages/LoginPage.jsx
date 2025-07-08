@@ -5,6 +5,7 @@ import { checkLogin } from "../api/Login";
 export default function LoginPage() {
   const [username, setUsername] = useState("1234");
   const [password, setPassword] = useState("mypassword123");
+  const [message, setMessage] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -31,7 +32,7 @@ export default function LoginPage() {
       .catch((err) => {
         console.log("err", err);
         if (err.status === 404) {
-          alert("ีusername  หรือ password ไม่ถูกต้อง");
+          setMessage(true);
         }
       });
   };
@@ -43,16 +44,12 @@ export default function LoginPage() {
   return (
     <>
       <div className="flex justify-center items-center w-screen h-screen bg-[#E6F7F9]">
-        <div className="bg-[#FFFFFF] p-8 rounded-2xl flex flex-col justify-center items-center shadow-2xl">
-          <img
-            src="/images/logo3.png"
-            alt="bin"
-            className="w-auto h-30  mb-10"
-          />
+        <div className="bg-[#FFFFFF] p-8 rounded-2xl flex flex-row justify-center items-center shadow-2xl ">
+          <img src="/images/logo.png" alt="bin" className="w-auto h-50  " />
 
-          <form className="flex flex-col justify-top items-center bg-slate-50/0 hauto rounded-xl p-5  ">
-            <div className="flex flex-col space-y-3 w-full ">
-              <label className="label border-2 border-slate-300 rounded-4xl py-2 px-5  space-x-2 ">
+          <form className="flex flex-col justify-top items-center  h-auto rounded-xl p-5 ">
+            <div className="flex flex-col  w-full ">
+              <label className="label border-2 border-slate-300 rounded-4xl py-2 px-5  space-x-2  mb-2">
                 <img
                   src="/images/user (2).png"
                   alt="bin"
@@ -76,7 +73,7 @@ export default function LoginPage() {
                 />
                 <input
                   type="Password"
-                  className="w-full h-8 text-[#333333]text-xl border-none focus:outline-none focus:ring-0 placeholder:text-slate-100 "
+                  className="w-full h-8 text-[#333333] text-xl border-none focus:outline-none focus:ring-0 placeholder:text-slate-100 "
                   placeholder="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -84,8 +81,16 @@ export default function LoginPage() {
                 />
               </label>
 
+              <span
+                className={`text-red-500 text-sm text-center  block transition-all duration-200 ${
+                  message ? "visible" : "invisible"
+                }`}
+              >
+                username หรือ password ไม่ถูกต้อง!
+              </span>
+
               <button
-                className="p-2 bg-[#00B2CA] mt-4 text-xl text-[#333333] rounded-4xl border-1 border-slate-300 active:bg-slate-300"
+                className="p-2 bg-[#00B2CA] mt-4  text-xl text-slate-50 rounded-4xl border-1 border-slate-300 active:bg-slate-300 font-medium"
                 onClick={handleLogin}
               >
                 Login

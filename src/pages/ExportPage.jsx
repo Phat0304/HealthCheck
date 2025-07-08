@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Table from "../components/ExportPage/Table";
 import ImportModal from "../components/ExportPage/ImportFile";
 import { searchEmployeeById, ExportData } from "../api/ExportAPI";
+import throttle from "lodash.throttle";
 
 export default function ExportPage() {
   const [checkType, setCheckType] = useState("annual");
@@ -24,7 +25,7 @@ export default function ExportPage() {
     ? years.filter((y) => y.value >= fromYear.value)
     : years;
 
-  const searchClick = () => {
+  const handleSearchClick = () => {
     if (search !== "") {
       if (checkType === "first") {
         const formData = {
@@ -88,7 +89,7 @@ export default function ExportPage() {
     return sortedYears;
   };
 
-  const Export_Click = () => {
+  const handleExport = () => {
     if (
       Array.isArray(selectYear) &&
       selectYear.length > 0 &&
@@ -131,175 +132,176 @@ export default function ExportPage() {
     }
   };
 
+  const searchClick = throttle(handleSearchClick, 1000);
+  const Export_Click = throttle(handleExport, 3000);
+
   return (
     <>
       <div className="bg-slate-50 p-5 space-y-2 ">
-        <div className=" rounded space-y-2 ">
-          <div className="flex flex-rows  space-x-10">
-            <div className="space-x-2">
-              <input
-                type="radio"
-                name="myOption"
-                className="radio radio-sm border-cyan-500 checked:border-cyan-500 "
-                value="first"
-                checked={checkType === "first"}
-                onChange={() => setCheckType("first")}
-              />
-              <label>ตรวจสุขภาพครั้งแรก</label>
-            </div>
-            <div className="space-x-2">
-              <input
-                type="radio"
-                name="myOption"
-                className="radio radio-sm border-cyan-500 checked:border-cyan-500"
-                value="annual"
-                checked={checkType === "annual"}
-                onChange={() => setCheckType("annual")}
-              />
-              <label>ตรวจสุขภาพประจำปี</label>
-            </div>
+        <div className="flex flex-rows  space-x-10">
+          <div className="space-x-2">
+            <input
+              type="radio"
+              name="myOption"
+              className="radio radio-sm border-cyan-500 checked:border-cyan-500 "
+              value="first"
+              checked={checkType === "first"}
+              onChange={() => setCheckType("first")}
+            />
+            <label>ตรวจสุขภาพครั้งแรก</label>
           </div>
+          <div className="space-x-2">
+            <input
+              type="radio"
+              name="myOption"
+              className="radio radio-sm border-cyan-500 checked:border-cyan-500"
+              value="annual"
+              checked={checkType === "annual"}
+              onChange={() => setCheckType("annual")}
+            />
+            <label>ตรวจสุขภาพประจำปี</label>
+          </div>
+        </div>
 
-          <div className="flex flex-row space-x-5 items-center   justify-between">
-            <div className="flex flex-rows space-x-5 items-center ">
-              <div className="space-x-2">
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="textBox w-40 h-7.5 "
-                  placeholder="ใส่รหัสพนักงาน 5 ตัวท้าย"
-                ></input>
-              </div>
-              <div className="flex space-x-2 items-center  ">
-                <label>ตั้งแต่ปี :</label>
-                <Select
-                  className="text-center"
-                  options={years}
-                  value={fromYear}
-                  placeholder="เลือกปี"
-                  onChange={(selected) => {
-                    setFromYear(selected);
-                    if (toYear && selected && toYear.value < selected.value) {
-                      setToYear(null);
-                    }
-                  }}
-                  isSearchable={false}
-                  styles={{
-                    control: (base, state) => ({
-                      ...base,
-                      fontSize: "15px",
-                      minHeight: "10px",
-                      height: "30px",
-                      width: "150px",
-                      borderWidth: "2px",
-                      borderColor: state.isFocused ? "#0284C7" : "#00B2CA",
-
-                      "&:hover": {
-                        borderWidth: "2px",
-                        borderColor: "#00B2CA",
-                      },
-                    }),
-                    valueContainer: (base) => ({
-                      ...base,
-                      maxHeight: "100px",
-                      maxWidth: "120px",
-                      overflowY: "auto",
-
-                      borderRadius: "2px",
-                    }),
-                    menuList: (base) => ({
-                      ...base,
-                      maxHeight: "150px",
-                      overflowY: "auto",
-                    }),
-                    dropdownIndicator: (base) => ({
-                      ...base,
-                      height: "25px",
-                      width: "25px",
-
-                      display: "flex",
-                      alignItems: "center", // จัดลูกศรให้อยู่กลางแนวตั้ง
-                      justifyContent: "center", // จัดลูกศรให้อยู่กลางแนวนอน
-                      padding: "4px",
-                      borderRadius: "2px",
-                    }),
-                  }}
-                ></Select>
-              </div>
-              <div className="flex space-x-2 items-center ">
-                <label>ถึงปี :</label>
-                <Select
-                  className="text-center"
-                  options={filteredToYearOptions}
-                  value={toYear}
-                  onChange={(selected) => setToYear(selected)}
-                  placeholder="เลือกปี"
-                  isSearchable={false}
-                  styles={{
-                    control: (base, state) => ({
-                      ...base,
-                      fontSize: "15px",
-                      minHeight: "10px",
-                      height: "30px",
-                      width: "150px",
-                      borderWidth: "2px",
-                      borderColor: state.isFocused ? "#0284C7" : "#00B2CA",
-
-                      "&:hover": {
-                        borderWidth: "2px",
-                        borderColor: "#00B2CA",
-                      },
-                    }),
-                    valueContainer: (base) => ({
-                      ...base,
-                      maxHeight: "100px",
-                      overflowY: "auto",
-                      borderRadius: "2px",
-                    }),
-                    menuList: (base) => ({
-                      ...base,
-                      maxHeight: "150px",
-                      overflowY: "auto",
-                    }),
-                    dropdownIndicator: (base) => ({
-                      ...base,
-                      height: "25px",
-                      width: "25px",
-
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "4px",
-                      borderRadius: "2px",
-                    }),
-                  }}
-                ></Select>
-              </div>
-              <button
-                className="flex items-center justify-center min-w-10  min-h-8 rounded-md  bg-[#00B2CA] text-slate-50 hover:bg-[#019BB5] active:bg-[#008DA3] border-1 border-[#00A0B0] shadow-sm transition-all duration-200"
-                onClick={() => searchClick()}
-              >
-                <img
-                  src="/images/search.png"
-                  alt="search"
-                  className=" w-4 h-4 "
-                />
-              </button>
+        <div className="flex lg:flex-row md:flex-col sm:flex-col space-x-5  lg:items-center md:space-y-2 sm:space-y-2  justify-between">
+          <div className="flex flex-rows space-x-5 items-center ">
+            <div className="space-x-2">
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="textBox w-40 h-7.5 "
+                placeholder="ใส่รหัสพนักงาน 5 ตัวท้าย"
+              ></input>
             </div>
-            <div className="flex flex-row space-x-5 ">
-              <button className="confirmButton " onClick={() => Export_Click()}>
-                Export
-              </button>
-              <button
-                className="importButton "
-                onClick={() =>
-                  document.getElementById("import_modal").showModal()
-                }
-              >
-                Import
-              </button>
+            <div className="flex space-x-2 items-center  ">
+              <label>ตั้งแต่ปี :</label>
+              <Select
+                className="text-center"
+                options={years}
+                value={fromYear}
+                placeholder="เลือกปี"
+                onChange={(selected) => {
+                  setFromYear(selected);
+                  if (toYear && selected && toYear.value < selected.value) {
+                    setToYear(null);
+                  }
+                }}
+                isSearchable={false}
+                styles={{
+                  control: (base, state) => ({
+                    ...base,
+                    fontSize: "15px",
+                    minHeight: "10px",
+                    height: "30px",
+                    width: "150px",
+                    borderWidth: "2px",
+                    borderColor: state.isFocused ? "#0284C7" : "#00B2CA",
+
+                    "&:hover": {
+                      borderWidth: "2px",
+                      borderColor: "#00B2CA",
+                    },
+                  }),
+                  valueContainer: (base) => ({
+                    ...base,
+                    maxHeight: "100px",
+                    maxWidth: "120px",
+                    overflowY: "auto",
+
+                    borderRadius: "2px",
+                  }),
+                  menuList: (base) => ({
+                    ...base,
+                    maxHeight: "150px",
+                    overflowY: "auto",
+                  }),
+                  dropdownIndicator: (base) => ({
+                    ...base,
+                    height: "25px",
+                    width: "25px",
+
+                    display: "flex",
+                    alignItems: "center", // จัดลูกศรให้อยู่กลางแนวตั้ง
+                    justifyContent: "center", // จัดลูกศรให้อยู่กลางแนวนอน
+                    padding: "4px",
+                    borderRadius: "2px",
+                  }),
+                }}
+              ></Select>
             </div>
+            <div className="flex space-x-2 items-center ">
+              <label>ถึงปี :</label>
+              <Select
+                className="text-center"
+                options={filteredToYearOptions}
+                value={toYear}
+                onChange={(selected) => setToYear(selected)}
+                placeholder="เลือกปี"
+                isSearchable={false}
+                styles={{
+                  control: (base, state) => ({
+                    ...base,
+                    fontSize: "15px",
+                    minHeight: "10px",
+                    height: "30px",
+                    width: "150px",
+                    borderWidth: "2px",
+                    borderColor: state.isFocused ? "#0284C7" : "#00B2CA",
+
+                    "&:hover": {
+                      borderWidth: "2px",
+                      borderColor: "#00B2CA",
+                    },
+                  }),
+                  valueContainer: (base) => ({
+                    ...base,
+                    maxHeight: "100px",
+                    overflowY: "auto",
+                    borderRadius: "2px",
+                  }),
+                  menuList: (base) => ({
+                    ...base,
+                    maxHeight: "150px",
+                    overflowY: "auto",
+                  }),
+                  dropdownIndicator: (base) => ({
+                    ...base,
+                    height: "25px",
+                    width: "25px",
+
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "4px",
+                    borderRadius: "2px",
+                  }),
+                }}
+              ></Select>
+            </div>
+            <button
+              className="flex items-center justify-center min-w-10  min-h-8 rounded-md  bg-[#00B2CA] text-slate-50 hover:bg-[#019BB5] active:bg-[#008DA3] border-1 border-[#00A0B0] shadow-sm transition-all duration-200"
+              onClick={() => searchClick()}
+            >
+              <img
+                src="/images/search.png"
+                alt="search"
+                className=" w-4 h-4 "
+              />
+            </button>
+          </div>
+          <div className="flex flex-row space-x-5 ">
+            <button className="confirmButton " onClick={() => Export_Click()}>
+              Export
+            </button>
+            <button
+              className="importButton "
+              onClick={() =>
+                document.getElementById("import_modal").showModal()
+              }
+            >
+              Import
+            </button>
           </div>
         </div>
 
@@ -343,16 +345,19 @@ export default function ExportPage() {
         </div>
         {/* -------------------------------------------------------------------- */}
         <div className="mainLabel flex flex-col">
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 space-x-2 mb-2">
-            <div className="flex justify-between ">
-              <h2 className="text-xl text-gray-800">ตรวจร่างกายทั่วไป</h2>
-              <label className="label ">ปี :</label>
-            </div>
-            <label className="labelBox min-w-30 max-w-30 h-8 ">
-              {employeeData?.[0]?.data_year ?? "-"}
-            </label>
+          <div className="grid lg:grid-cols-5 md:grid-cols-3 space-x-2 mb-2">
+            <h2 className="text-xl text-gray-800">ตรวจร่างกายทั่วไป</h2>
           </div>
           <div className="grid lg:grid-cols-2 lg:grid-rows-3 md:grid-cols-1 md:grid-rows-6  gap-2">
+            <div className="grid grid-cols-3 space-x-2">
+              <label className="label flex items-center justify-end">
+                ปี :
+              </label>
+              <label className="labelBox min-w-30 max-w-30 h-8 ">
+                {employeeData?.[0]?.data_year ?? "-"}
+              </label>
+            </div>
+
             <div className="grid grid-cols-3 space-x-2 ">
               <label className="label  flex items-center justify-end text-right break-words whitespace-normal">
                 ความดันโลหิต (Blood Pressure) :

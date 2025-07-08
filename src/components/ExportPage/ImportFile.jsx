@@ -1,8 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 import { ImportData } from "../../api/ExportAPI";
 
 export default function ImportFile() {
+  const [isLoading, setIsLoading] = useState(false);
   const [topic, setTopic] = useState("");
   const [message, setMessage] = useState("");
   const [image, setImage] = useState("/images/check (3).png");
@@ -14,8 +15,19 @@ export default function ImportFile() {
     (y) => ({ label: y, value: y })
   );
 
+  useEffect(() => {
+    const modal = document.getElementById("loading_modal");
+    if (!modal) return;
+    if (isLoading) {
+      modal.showModal();
+    } else {
+      modal.close();
+    }
+  }, [isLoading]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = {
       yearSelected: selectedYear.value,
       file: selectedFile,
@@ -26,7 +38,7 @@ export default function ImportFile() {
       .then((res) => {
         console.log("resIm", res);
 
-        setTopic("Success");
+        setTopic("Data Import Successful");
         setMessage(res.data.message);
         setImage("/images/check (3).png");
         CloseModal_Click();
@@ -37,44 +49,14 @@ export default function ImportFile() {
         console.log("errIm", err.response.data);
         if (err.status === 400) {
           const dataErr = err.response.data;
-
-          switch (dataErr.topic) {
-            case "checkYearExist":
-              setTopic(dataErr.topic);
-              setMessage(dataErr.message);
-              setImage("/images/cancel.png");
-              document.getElementById("warning_modal").showModal();
-
-              break;
-
-            case "checkFile":
-              setTopic(dataErr.topic);
-              setMessage(dataErr.message);
-              setImage("/images/cancel.png");
-              document.getElementById("warning_modal").showModal();
-
-              break;
-
-            case "checkSheet":
-              setTopic(dataErr.topic);
-              setMessage(dataErr.message);
-              setImage("/images/cancel.png");
-              document.getElementById("warning_modal").showModal();
-
-              break;
-
-            case "checkExcelYear":
-              setTopic(dataErr.topic);
-              setMessage(dataErr.message);
-              setImage("/images/cancel.png");
-              document.getElementById("warning_modal").showModal();
-
-              break;
-
-            default:
-              alert(err);
-          }
+          setTopic(dataErr.topic);
+          setMessage(dataErr.message);
+          setImage("/images/cancel.png");
+          document.getElementById("warning_modal").showModal();
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -89,13 +71,13 @@ export default function ImportFile() {
       <dialog id="import_modal" className="modal">
         <div className="modal-box bg-slate-50 text-black  ">
           <div className="flex flex-col items-center space-x-3 mb-5 h-50">
-            {/* <img
-              src="/images/data-entry1.png"
+            <img
+              src="/images/download.png"
               alt="bin"
-              className="w-25 h-25 "
-            /> */}
+              className="w-35 h-35 mb-5 "
+            />
             <h2 className="text-2xl font-medium  text-gray-600">
-              Import File Excel
+              Import Excel File
             </h2>
           </div>
 
@@ -107,7 +89,7 @@ export default function ImportFile() {
                 accept=".xlsx,.xls"
                 required
                 onChange={(e) => setSelectedFile(e.target.files[0])}
-                className=" textBox w-full h-10 file:py-2 file:px-4 file:bg-[#81CDDF] file:text-white  file:border-0"
+                className=" textBox w-full h-10 file:py-2 file:px-4 file:bg-[#00B2CA] file:text-white  file:border-0"
               />
 
               <Select
@@ -169,7 +151,7 @@ export default function ImportFile() {
             <img src={image} alt="bin" className="w-20 h-20 " />
             <div className="flex flex-col space-y-2 w-auto h-auto">
               <label className="text-xl ">
-                {`Error : `}
+                {` `}
                 {topic}
               </label>
               <label className="text-md ">{message}</label>
@@ -181,6 +163,15 @@ export default function ImportFile() {
               OK
             </button>
           </div>
+        </div>
+      </dialog>
+
+      <dialog id="loading_modal" className="modal ">
+        <div className="bg-slate-50/0 text-black w-auto h-auto space-y-2">
+          <span className="loading loading-spinner  w-40 h-40 bg-[#00B2CA]"></span>
+          <p className="text-lg text-slate-50 font-semibold text-center">
+            Loading...
+          </p>
         </div>
       </dialog>
     </>
