@@ -170,6 +170,11 @@ export default function ExportPage() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    searchClick();
+                  }
+                }}
                 className="textBox w-40 h-7.5 "
                 placeholder="ใส่รหัสพนักงาน 5 ตัวท้าย"
               ></input>
