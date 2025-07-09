@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { checkLogin } from "../api/Login";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("1234");
-  const [password, setPassword] = useState("mypassword123");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState(false);
   const navigate = useNavigate();
 
@@ -33,6 +33,8 @@ export default function LoginPage() {
         console.log("err", err);
         if (err.status === 404) {
           setMessage(true);
+        } else {
+          alert(err.message);
         }
       });
   };
@@ -45,7 +47,11 @@ export default function LoginPage() {
     <>
       <div className="flex justify-center items-center w-screen h-screen bg-[#E6F7F9]">
         <div className="bg-[#FFFFFF] p-8 rounded-2xl flex flex-row justify-center items-center shadow-2xl ">
-          <img src="/images/logo.png" alt="bin" className="w-auto h-50  " />
+          <img
+            src="/images/logo1.png"
+            alt="bin"
+            className="w-auto h-50 mr-5 "
+          />
 
           <form className="flex flex-col justify-top items-center  h-auto rounded-xl p-5 ">
             <div className="flex flex-col  w-full ">
@@ -57,7 +63,7 @@ export default function LoginPage() {
                 />
                 <input
                   type="text"
-                  className=" w-full h-8  text-[#333333] text-xl  border-none focus:outline-none focus:ring-0 placeholder:text-slate-100"
+                  className=" w-full h-8  text-[#333333] text-xl  border-none focus:outline-none focus:ring-0 placeholder:text-slate-500"
                   placeholder="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -73,7 +79,7 @@ export default function LoginPage() {
                 />
                 <input
                   type="Password"
-                  className="w-full h-8 text-[#333333] text-xl border-none focus:outline-none focus:ring-0 placeholder:text-slate-100 "
+                  className="w-full h-8 text-[#333333] text-xl border-none focus:outline-none focus:ring-0 placeholder:text-slate-500 "
                   placeholder="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

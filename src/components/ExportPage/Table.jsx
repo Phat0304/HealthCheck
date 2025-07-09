@@ -2,12 +2,14 @@ import React, { use, useEffect, useState } from "react";
 
 export default function Table({ year, data }) {
   const [years, setYears] = useState([]);
+  const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
     if (year.length >= 1) {
       setYears(year);
+      setIsShow(true);
     } else {
-      setYears([""]);
+      setIsShow(false);
     }
   }, [year]);
 
@@ -25,26 +27,19 @@ export default function Table({ year, data }) {
   return (
     <>
       {/* --------------------------------------------table1--------------------------------------------- */}
-      <div className="space-y-3 ">
+      <div className={`space-y-3  ${isShow ? "visible" : "hidden"} `}>
         <div className=" border-1 border-gray-600 bg-base-100 rounded font-medium ">
-          <label className="bg-[#00B2CA] flex items-center justify-center text-center  py-2 rounded-t text-neutral-600 ห">
+          <label className="bg-[#12cbd4] flex items-center justify-center text-center  py-2 rounded-t text-black font-semibold">
             ตรวจร่างกายทั่วไป (Physical Examination)
           </label>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm ">
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1 bg-[#66d1df] text-neutral-600 w-60 min-w-60">
-                    รายการตรวจ
-                  </th>
-                  <th className="columnTable bg-[#66d1df] text-neutral-600 w-40 min-w-40 ">
-                    ค่าปกติ
-                  </th>
+                  <th className="columnCheck w-60 min-w-60 ">รายการตรวจ</th>
+                  <th className="columnUnit w-40 min-w-40 ">ค่าปกติ</th>
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df] min-w-30"
-                    >
+                    <th key={year} className="columnYear  min-w-30  ">
                       {year}
                     </th>
                   ))}
@@ -57,12 +52,12 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]   text-neutral-600">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]   text-black ">
                       {row.name}
                     </td>
-                    <td className="columnTable bg-[#E6F7FA] ">{row.unit}</td>
+                    <td className="columnTable  bg-[#E6F7FA] ">{row.unit}</td>
                     {years.map((year) => (
-                      <td className="columnTable " key={year}>
+                      <td className="columnTable  " key={year}>
                         {row[year] || "-"}
                       </td>
                     ))}
@@ -75,25 +70,18 @@ export default function Table({ year, data }) {
 
         {/* ------------------------------------table2---------------------------------------- */}
 
-        <div className="  border border-base-content bg-base-100 rounded ">
-          <label className="bg-[#00B2CA] flex items-center justify-center text-center  py-2 rounded-t text-neutral-600 ">
+        <div className="  border-1 border-gray-600 bg-base-100 rounded font-medium">
+          <label className="bg-[#12cbd4] flex items-center justify-center text-center  py-2 rounded-t text-black font-semibold">
             การตรวจทางห้องปฏิบัติการ (LABORATORY EXAMINATION)
           </label>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm  ">
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df] text-neutral-600 w-60 min-w-60">
-                    รายการตรวจ
-                  </th>
-                  <th className="columnTable bg-[#66d1df] text-neutral-600 w-40 min-w-40 ">
-                    ค่าปกติ
-                  </th>
+                  <th className=" columnCheck w-60 min-w-60 ">รายการตรวจ</th>
+                  <th className="  columnUnit w-40 min-w-40  ">ค่าปกติ</th>
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df]  min-w-30"
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -106,10 +94,10 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB] ">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]   text-black ">
                       {row.name}
                     </td>
-                    <td className="columnTable bg-[#E6F7FB] ">{row.unit}</td>
+                    <td className="columnTable  bg-[#E6F7FA] ">{row.unit}</td>
                     {years.map((year) => (
                       <td className="columnTable  " key={year}>
                         {row[year] || "-"}
@@ -122,25 +110,18 @@ export default function Table({ year, data }) {
           </div>
         </div>
         {/* -----------------------------table3------------------------------------ */}
-        <div className="  border border-base-content bg-base-100 rounded ">
-          <label className="bg-[#00B2CA] flex items-center justify-center text-center  py-2 rounded-t text-neutral-600 ">
+        <div className="  border-1 border-gray-600 bg-base-100 rounded font-medium ">
+          <label className="bg-[#12cbd4] flex items-center justify-center text-center  py-2 rounded-t text-black font-semibold">
             การตรวจทางห้องปฏิบัติการ (LABORATORY EXAMINATION)
           </label>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm ">
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df] text-neutral-600 w-60 min-w-60">
-                    รายการตรวจ
-                  </th>
-                  <th className="columnTable bg-[#66d1df] text-neutral-600 w-40 min-w-40 ">
-                    ค่าปกติ
-                  </th>
+                  <th className="columnCheck w-60 min-w-60 ">รายการตรวจ</th>
+                  <th className="  columnUnit w-40 min-w-40  ">ค่าปกติ</th>
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df] min-w-30 "
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -153,10 +134,10 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB]">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]   text-black ">
                       {row.name}
                     </td>
-                    <td className="columnTable bg-[#E6F7FB] ">{row.unit}</td>
+                    <td className="columnTable  bg-[#E6F7FA] ">{row.unit}</td>
                     {years.map((year) => (
                       <td className="columnTable " key={year}>
                         {row[year] || "-"}
@@ -169,25 +150,18 @@ export default function Table({ year, data }) {
           </div>
         </div>
         {/* -----------------------------------------------table4--------------------------------- */}
-        <div className=" border border-base-content bg-base-100 rounded ">
-          <label className="bg-[#00B2CA] flex items-center justify-center text-center  py-2 rounded-t text-neutral-600 ">
+        <div className=" border-1 border-gray-600 bg-base-100 rounded font-medium ">
+          <label className="bg-[#12cbd4] flex items-center justify-center text-center  py-2 rounded-t text-black font-semibold">
             การตรวจทางห้องปฏิบัติการ (LABORATORY EXAMINATION)
           </label>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm ">
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df] text-neutral-600 w-60 min-w-60">
-                    รายการตรวจ
-                  </th>
-                  <th className="columnTable bg-[#66d1df] w-40 min-w-40 ">
-                    ค่าปกติ
-                  </th>
+                  <th className=" columnCheck w-60 min-w-60 ">รายการตรวจ</th>
+                  <th className=" columnUnit w-40 min-w-40 ">ค่าปกติ</th>
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df] min-w-30 "
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -200,10 +174,10 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB] ">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]   text-black ">
                       {row.name}
                     </td>
-                    <td className="columnTable bg-[#E6F7FB] ">{row.unit}</td>
+                    <td className="columnTable  bg-[#E6F7FA] ">{row.unit}</td>
                     {years.map((year) => (
                       <td className="columnTable " key={year}>
                         {row[year] || "-"}
@@ -217,25 +191,18 @@ export default function Table({ year, data }) {
         </div>
 
         {/* -----------------------------------------------table5--------------------------------- */}
-        <div className=" border border-base-content bg-base-100 rounded">
-          <label className="bg-[#00B2CA] flex items-center justify-center text-center  py-2 rounded-t text-neutral-600">
+        <div className=" border-1 border-gray-600 bg-base-100 rounded font-medium">
+          <label className="bg-[#12cbd4] flex items-center justify-center text-center  py-2 rounded-t text-black font-semibold">
             ตรวจสมรรถภาพปอด (Spirometry)
           </label>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm ">
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df]   text-neutral-600 w-60 min-w-60">
-                    รายการตรวจ
-                  </th>
-                  <th className="columnTable bg-[#66d1df]   w-40 min-w-40 ">
-                    ค่าปกติ
-                  </th>
+                  <th className="columnCheck w-60 min-w-60 ">รายการตรวจ</th>
+                  <th className=" columnUnit w-40 min-w-40 ">ค่าปกติ</th>
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df] min-w-30 "
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -248,7 +215,7 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB]  ">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]   text-black ">
                       {row.name}
                     </td>
                     <td className="columnTable bg-[#E6F7FB] ">{row.unit}</td>
@@ -265,23 +232,18 @@ export default function Table({ year, data }) {
         </div>
 
         {/* -----------------------------------------------table6--------------------------------- */}
-        <div className=" border border-base-content bg-base-100 rounded">
-          <label className="bg-[#00B2CA] flex items-center justify-center text-center  py-2 rounded-t text-neutral-600">
+        <div className=" border-1 border-gray-600 bg-base-100 rounded font-medium">
+          <label className="bg-[#12cbd4] flex items-center justify-center text-center  py-2 rounded-t text-black font-semibold">
             ตรวจสมรรถภาพการได้ยิน (Screening Audiometry)
           </label>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm ">
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df]  text-neutral-600 w-100 min-w-100">
-                    หูขวา(dB)
-                  </th>
+                  <th className=" columnCheck w-100 min-w-100   ">หูขวา(dB)</th>
 
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df] min-w-30 "
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -294,7 +256,7 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB]   ">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA] text-center   text-black ">
                       {row.name}
                     </td>
 
@@ -309,15 +271,10 @@ export default function Table({ year, data }) {
 
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df]   text-neutral-600 w-100 min-w-100">
-                    หูซ้าย(dB)
-                  </th>
+                  <th className="columnCheck w-100 min-w-100  ">หูซ้าย(dB)</th>
 
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df]  min-w-30"
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -330,7 +287,7 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB]   ">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]  text-center  text-black ">
                       {row.name}
                     </td>
 
@@ -345,15 +302,12 @@ export default function Table({ year, data }) {
 
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df] text-neutral-600 w-100 min-w-100">
+                  <th className=" columnCheck w-100 min-w-100  ">
                     ค่าเฉลี่ยหูขวา
                   </th>
 
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df] min-w-30 "
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -366,7 +320,7 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB]   ">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA] text-center   text-black ">
                       {row.name}
                     </td>
 
@@ -381,15 +335,12 @@ export default function Table({ year, data }) {
 
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df]   text-neutral-600 w-100 min-w-100">
+                  <th className="columnCheck w-100 min-w-100 ">
                     ค่าเฉลี่ยหูซ้าย
                   </th>
 
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df] min-w-30 "
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -402,7 +353,7 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB]  ">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]  text-center text-black ">
                       {row.name}
                     </td>
 
@@ -419,23 +370,18 @@ export default function Table({ year, data }) {
         </div>
 
         {/* -----------------------------------------------table7--------------------------------- */}
-        <div className="  border border-base-content bg-base-100 rounded">
-          <label className="bg-[#00B2CA] flex items-center justify-center text-center  py-2 rounded-t text-neutral-600 ">
+        <div className="  border-1 border-gray-600 bg-base-100 rounded font-medium">
+          <label className="bg-[#12cbd4] flex items-center justify-center text-center  py-2 rounded-t text-black font-semibold">
             ผลตรวจสมรรถภาพการมองเห็นด้านชีวอนามัย(Occupation Vision Test)
           </label>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm ">
               <thead>
                 <tr>
-                  <th className="border-t-1  border-gray-600 p-1  bg-[#66d1df]   text-neutral-600 w-100 min-w-100">
-                    รายการตรวจ
-                  </th>
+                  <th className="columnCheck w-100 min-w-100 ">รายการตรวจ</th>
 
                   {years.map((year) => (
-                    <th
-                      key={year}
-                      className="columnTable bg-[#66d1df] min-w-30  "
-                    >
+                    <th key={year} className=" columnYear  min-w-30 ">
                       {year}
                     </th>
                   ))}
@@ -448,12 +394,12 @@ export default function Table({ year, data }) {
                     key={idx}
                     className=" odd:bg-slate-50 even:bg-[#ededed] hover:bg-gray-300 "
                   >
-                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FB]  text-neutral-600  ">
+                    <td className="border-t-1  border-gray-600 p-1  bg-[#E6F7FA]  text-center  text-black ">
                       {row.name}
                     </td>
 
                     {years.map((year) => (
-                      <td className="columnTable  " key={year}>
+                      <td className="columnTable text-center " key={year}>
                         {row[year] || "-"}
                       </td>
                     ))}

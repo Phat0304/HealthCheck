@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import Table from "../components/ExportPage/Table";
@@ -12,14 +11,15 @@ export default function ExportPage() {
   const [fromYear, setFromYear] = useState({ label: 2565, value: 2565 });
   const [toYear, setToYear] = useState({ label: 2568, value: 2568 });
   const [selectYear, setSelectYear] = useState([]);
-  const [search, setSearch] = useState("15756");
+  const [search, setSearch] = useState("");
   const [employeeData, setEmployeeData] = useState([]);
   const [healthData, setHealthData] = useState([]);
 
   const currentYear = new Date().getFullYear() + 543;
-  const years = Array.from({ length: 30 }, (_, i) => currentYear - i).map(
-    (y) => ({ label: y, value: y })
-  );
+  const years = Array.from(
+    { length: currentYear - 2550 + 1 },
+    (_, i) => currentYear - i
+  ).map((y) => ({ label: y, value: y }));
 
   const filteredToYearOptions = fromYear
     ? years.filter((y) => y.value >= fromYear.value)
@@ -148,7 +148,7 @@ export default function ExportPage() {
               checked={checkType === "first"}
               onChange={() => setCheckType("first")}
             />
-            <label>ตรวจสุขภาพครั้งแรก</label>
+            <label className="text-black ">ตรวจสุขภาพครั้งแรก</label>
           </div>
           <div className="space-x-2">
             <input
@@ -159,7 +159,7 @@ export default function ExportPage() {
               checked={checkType === "annual"}
               onChange={() => setCheckType("annual")}
             />
-            <label>ตรวจสุขภาพประจำปี</label>
+            <label className="text-black ">ตรวจสุขภาพประจำปี</label>
           </div>
         </div>
 
@@ -175,7 +175,7 @@ export default function ExportPage() {
               ></input>
             </div>
             <div className="flex space-x-2 items-center  ">
-              <label>ตั้งแต่ปี :</label>
+              <label className="text-black ">ตั้งแต่ปี :</label>
               <Select
                 className="text-center"
                 options={years}
@@ -196,11 +196,11 @@ export default function ExportPage() {
                     height: "30px",
                     width: "150px",
                     borderWidth: "2px",
-                    borderColor: state.isFocused ? "#0284C7" : "#00B2CA",
+                    borderColor: state.isFocused ? "#333333" : "#00B2CA",
 
                     "&:hover": {
                       borderWidth: "2px",
-                      borderColor: "#00B2CA",
+                      borderColor: "#333333",
                     },
                   }),
                   valueContainer: (base) => ({
@@ -215,6 +215,7 @@ export default function ExportPage() {
                     ...base,
                     maxHeight: "150px",
                     overflowY: "auto",
+                    fontSize: "15px",
                   }),
                   dropdownIndicator: (base) => ({
                     ...base,
@@ -231,7 +232,7 @@ export default function ExportPage() {
               ></Select>
             </div>
             <div className="flex space-x-2 items-center ">
-              <label>ถึงปี :</label>
+              <label className="text-black ">ถึงปี :</label>
               <Select
                 className="text-center"
                 options={filteredToYearOptions}
@@ -247,11 +248,11 @@ export default function ExportPage() {
                     height: "30px",
                     width: "150px",
                     borderWidth: "2px",
-                    borderColor: state.isFocused ? "#0284C7" : "#00B2CA",
+                    borderColor: state.isFocused ? "#333333" : "#00B2CA",
 
                     "&:hover": {
                       borderWidth: "2px",
-                      borderColor: "#00B2CA",
+                      borderColor: "#333333",
                     },
                   }),
                   valueContainer: (base) => ({
@@ -264,6 +265,7 @@ export default function ExportPage() {
                     ...base,
                     maxHeight: "150px",
                     overflowY: "auto",
+                    fontSize: "15px",
                   }),
                   dropdownIndicator: (base) => ({
                     ...base,
@@ -307,7 +309,7 @@ export default function ExportPage() {
 
         {/* ------------------------------------------------------------------------------ */}
         <div className="mainLabel flex flex-col ">
-          <h2 className="text-xl text-gray-600">ข้อมูลพนักงาน</h2>
+          <h2 className="text-xl text-black ">ข้อมูลพนักงาน</h2>
           <div className="grid lg:grid-cols-2 lg:grid-rows-2 md:grid-cols-1 md:grid-rows-4  gap-2 ">
             <div className="grid grid-cols-3 items-center space-x-2 ">
               <label className="label flex items-center justify-end ">
@@ -344,9 +346,9 @@ export default function ExportPage() {
           </div>
         </div>
         {/* -------------------------------------------------------------------- */}
-        <div className="mainLabel flex flex-col">
+        <div className="mainLabel flex flex-col ">
           <div className="grid lg:grid-cols-5 md:grid-cols-3 space-x-2 mb-2">
-            <h2 className="text-xl text-gray-800">ตรวจร่างกายทั่วไป</h2>
+            <h2 className="text-xl text-black ">ตรวจร่างกายทั่วไป</h2>
           </div>
           <div className="grid lg:grid-cols-2 lg:grid-rows-3 md:grid-cols-1 md:grid-rows-6  gap-2">
             <div className="grid grid-cols-3 space-x-2">

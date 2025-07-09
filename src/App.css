@@ -11,7 +11,7 @@
 }
 
 .textBox {
-  @apply border-[#00B2CA] border-2 rounded text-sm text-center ;
+  @apply border-[#00B2CA] border-2 rounded text-[15px] text-center hover:border-[#333333] ;
 }
 
 
@@ -20,12 +20,12 @@
 }
 
 .label {
-  @apply   text-sm text-center text-gray-600 ;
+  @apply   text-sm text-center text-black  ;
 
 }
 
 .labelBox {
-  @apply border-[#00B2CA] border-1 border-solid px-4 py-2 rounded text-sm flex items-center justify-center text-center ;
+  @apply border-[#00B2CA] border-1 border-solid px-4 py-2 rounded text-sm flex items-center justify-center text-center text-black ;
 
 }
 
@@ -55,5 +55,18 @@
 
 
 .columnTable{
-   @apply  border-t-1 border-l-1 border-gray-600 p-1 text-neutral-600
+   @apply  border-t-1 border-l-1 border-gray-600 text-black p-1  text-center
+}
+
+
+.columnCheck{
+  @apply  border-t-1  border-gray-600  bg-[#7de0ed] text-black p-1
+}
+
+.columnUnit{
+  @apply  not-last:border-t-1 border-l-1 border-gray-800 bg-[#7de0ed] text-black  p-1
+}
+
+.columnYear{
+  @apply   border-t-1 border-l-1 border-gray-600 bg-[#7de0ed]  text-black p-1
 }

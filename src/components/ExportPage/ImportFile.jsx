@@ -71,11 +71,7 @@ export default function ImportFile() {
       <dialog id="import_modal" className="modal">
         <div className="modal-box bg-slate-50 text-black  ">
           <div className="flex flex-col items-center space-x-3 mb-5 h-50">
-            <img
-              src="/images/download.png"
-              alt="bin"
-              className="w-35 h-35 mb-5 "
-            />
+            <img src="/images/import.png" alt="bin" className="w-auto h-40 " />
             <h2 className="text-2xl font-medium  text-gray-600">
               Import Excel File
             </h2>
@@ -104,11 +100,11 @@ export default function ImportFile() {
                   control: (base, state) => ({
                     ...base,
                     borderWidth: "2px",
-                    borderColor: state.isFocused ? "#0284C7" : "#00B2CA",
+                    borderColor: state.isFocused ? "#333333" : "#00B2CA",
 
                     "&:hover": {
                       borderWidth: "2px",
-                      borderColor: "#00B2CA",
+                      borderColor: "#333333",
                     },
                   }),
                   valueContainer: (base) => ({

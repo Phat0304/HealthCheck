@@ -18,21 +18,22 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         }`}
       >
         <div>
-          {/* ปุ่ม Toggle */}
-          <div className={`flex flex-col my-4  items-start `}>
-            <button
-              className={`text-white w-10 h-10 rounded-full flex justify-center items-center 
-              active:bg-slate-200 active:text-gray-800 
-              hover:bg-[#81CDDF] transition-all duration-300`}
-              onClick={toggleSidebar}
-            >
-              <FaBars className="w-6 h-6" />
-            </button>
-          </div>
-
           {/* เมนู */}
-          <div className="flex flex-col  overflow-hidden transition-all duration-500 ease-in-out">
-            <ul className="space-y-4 text-slate-50">
+          <div className="flex flex-col  overflow-hidden transition-all duration-500 ease-in-out ">
+            <ul className="space-y-2 text-slate-50 mt-3">
+              <li
+                className="flex items-center gap-4 hover:bg-[#81CDDF] px-2 py-1 rounded transition-all duration-300"
+                onClick={toggleSidebar}
+              >
+                <img src="/images/list.png" title="เมนู" className="w-6 h-7 " />
+                <span
+                  className={`text-xl whitespace-nowrap transition-all duration-500 ease-in-out ml-1  ${
+                    isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                  }`}
+                >
+                  เมนู
+                </span>
+              </li>
               <li>
                 <Link
                   to="/"
@@ -56,7 +57,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
             </ul>
           </div>
         </div>
-        <div className="flex flex-col  overflow-hidden transition-all duration-500 ease-in-out">
+        <div className="flex flex-col  overflow-hidden transition-all duration-500 ease-in-out ">
           <ul className="space-y-4 text-slate-50">
             <li
               onClick={handleLogout}
